@@ -835,7 +835,7 @@
 
   <template id="contact-template">
     <form class="contact-form" action="https://formspree.io/f/xpwlaonk" method="POST">
-      <input type="text" dollari="Your Name" placeholder="Your Name" required>
+      <input type="text" name="name" placeholder="Your Name" required>
       <input type="email" name="email" placeholder="Email Address" required>
       <input type="tel" name="phone" placeholder="Phone Number">
       <select name="subject" required>
@@ -869,7 +869,7 @@
       const contentArea = document.querySelector('.content-area');
       let isAnimating = false;
       let currentSection = 'about';
-      let isMobileLayout = window.innerWidth <= 768;
+      let isMobileLayout = window.innerWidth <= 768 || window.innerHeight <= 700;
       
       const sections = [
         { id: 'about', title: 'Hello.' },
@@ -887,15 +887,8 @@
         contact: document.getElementById('contact-template')
       };
 
-      function checkNavOverlap() {
-        if (!navContainer || !contentArea) return false;
-        const navRect = navContainer.getBoundingClientRect();
-        const contentRect = contentArea.getBoundingClientRect();
-        return navRect.top < contentRect.bottom && navRect.bottom > contentRect.top;
-      }
-
       function toggleLayout() {
-        const isMobile = window.innerWidth <= 768 || checkNavOverlap();
+        const isMobile = window.innerWidth <= 768 || window.innerHeight <= 700;
         if (isMobile !== isMobileLayout) {
           isMobileLayout = isMobile;
           if (isMobileLayout) {
@@ -950,6 +943,16 @@
 
       window.addEventListener('resize', () => {
         toggleLayout();
+      });
+
+      const observer = new MutationObserver(() => {
+        toggleLayout();
+      });
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+        attributes: true
       });
 
       function animateNavItems() {
@@ -1021,6 +1024,7 @@
           } else {
             nextButton.innerHTML = '<span class="diamond"></span><span>Next</span>';
           }
+          setTimeout(toggleLayout, 0);
         }
       }
       
