@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abiral Gurung Tutoring</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #1D3557;
+      --offwhite: #F9FAFB;
+      --text: #2D3748;
+      --line-thickness: 2px;
+      --nav-spacing: 3px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--offwhite);
+      color: var(--text);
+      line-height: 1.6;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      margin-bottom: 2rem;
+      position: relative;
+      min-height: 6rem;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .title-wrapper {
+      display: inline-block;
+      position: relative;
+      min-height: 5rem;
+    }
+
+    .title-text {
+      font-size: 5rem;
+      font-weight: 400;
+      line-height: 1;
+      position: relative;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .highlight {
+      position: absolute;
+      bottom: 0.5rem;
+      left: 0;
+      width: 0;
+      height: 1.2rem;
+      background: var(--navy);
+      opacity: 0.2;
+      z-index: -1;
+      transition: width 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+      transform-origin: left center;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 3px;
+      height: 5rem;
+      background: var(--navy);
+      position: absolute;
+      right: -4px;
+      bottom: -0.3rem;
+      animation: blink 1.5s step-end infinite;
+      opacity: 0;
+    }
+
+    .next-button {
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      border: var(--line-thickness) solid var(--navy);
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      color: var(--navy);
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .next-button.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .next-button:hover {
+      background: var(--navy);
+      color: var(--offwhite);
+    }
+
+    .next-button:hover .diamond {
+      background: var(--offwhite);
+      border-color: var(--offwhite);
+    }
+
+    .diamond {
+      width: 0.8rem;
+      height: 0.8rem;
+      border: var(--line-thickness) solid var(--navy);
+      transform: rotate(45deg);
+      transition: all 0.3s ease;
+    }
+
+    .next-button:active .diamond {
+      transform: rotate(45deg) scale(0.9);
+    }
+
+    @keyframes blink {
+      from, to { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .content-area {
+      flex: 1;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content-section {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: none;
+      flex: 1;
+    }
+
+    .content-section.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .nav-container {
+      margin-top: auto;
+      padding-top: var(--nav-spacing);
+      flex-shrink: 0;
+    }
+
+    .separator {
+      height: var(--line-thickness);
+      background: var(--navy);
+      margin-bottom: 2rem;
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.5rem;
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .nav-item {
+      aspect-ratio: 1/1;
+      border: var(--line-thickness) solid var(--navy);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .nav-item.active {
+      background: var(--navy);
+      color: white;
+    }
+
+    .nav-item.disabled {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    .nav-symbol {
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      z-index: 2;
+      transition: color 0.2s ease;
+    }
+
+    .nav-label {
+      font-size: 1rem;
+      font-weight: 500;
+      z-index: 2;
+      transition: color 0.2s ease;
+    }
+
+    .about-item,
+    .approach-item,
+    .pledge-item,
+    .pricing-item {
+      position: relative;
+      padding-left: 2rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.4s ease;
+    }
+
+    .content-section.active .about-item,
+    .content-section.active .approach-item,
+    .content-section.active .pledge-item,
+    .content-section.active .pricing-item {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .content-section.active .about-item:nth-child(1),
+    .content-section.active .approach-item:nth-child(1),
+    .content-section.active .pledge-item:nth-child(1),
+    .content-section.active .pricing-item:nth-child(1) {
+      transition-delay: 0.1s;
+    }
+
+    .content-section.active .about-item:nth-child(2),
+    .content-section.active .approach-item:nth-child(2),
+    .content-section.active .pledge-item:nth-child(2),
+    .content-section.active .pricing-item:nth-child(2) {
+      transition-delay: 0.2s;
+    }
+
+    .content-section.active .about-item:nth-child(3),
+    .content-section.active .approach-item:nth-child(3),
+    .content-section.active .pledge-item:nth-child(3),
+    .content-section.active .pricing-item:nth-child(3) {
+      transition-delay: 0.3s;
+    }
+
+    .about-item::before,
+    .approach-item::before,
+    .pledge-item::before,
+    .pricing-item::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.3em;
+      width: 1rem;
+      height: 1rem;
+      border: var(--line-thickness) solid var(--navy);
+      transform: rotate(0deg) scale(0.8);
+      opacity: 0;
+      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .content-section.active .about-item::before,
+    .content-section.active .approach-item::before,
+    .content-section.active .pledge-item::before,
+    .content-section.active .pricing-item::before {
+      transform: rotate(45deg) scale(1);
+      opacity: 1;
+    }
+
+    .about-item:hover::before,
+    .approach-item:hover::before,
+    .pledge-item:hover::before,
+    .pricing-item:hover::before {
+      background-color: var(--navy);
+      animation: diamondPulse 1.5s infinite;
+    }
+
+    .about-item:hover,
+    .approach-item:hover,
+    .pledge-item:hover,
+    .pricing-item:hover {
+      cursor: pointer;
+    }
+
+    .about-item h3,
+    .approach-item h3,
+    .pledge-item h3,
+    .pricing-item h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .about-item h3::after,
+    .approach-item h3::after,
+    .pledge-item h3::after,
+    .pricing-item h3::after {
+      content: "";
+      position: absolute;
+      bottom: -0.25rem;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--navy);
+      transition: width 0.3s ease;
+    }
+
+    .about-item:hover h3::after,
+    .approach-item:hover h3::after,
+    .pledge-item:hover h3::after,
+    .pricing-item:hover h3::after {
+      width: 100%;
+    }
+
+    @keyframes diamondPulse {
+      0%, 100% { transform: rotate(45deg) scale(1); }
+      50% { transform: rotate(45deg) scale(1.1); }
+    }
+
+    .about-section {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .about-content {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .about-text {
+      flex: 1;
+    }
+
+    .about-photo-container {
+      flex: 0 0 auto;
+      max-width: 300px;
+      max-height: 100%;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      align-self: stretch;
+    }
+
+    .content-section.active .about-photo-container {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.2s;
+    }
+
+    .about-photo {
+      width: 90%;
+      height: 90%;
+      border: var(--line-thickness) solid var(--navy);
+      object-fit: cover;
+      aspect-ratio: 707/884;
+    }
+
+    .grades-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      margin-top: -3rem;
+    }
+
+    .grade-item {
+      display: flex;
+      align-items: center;
+      padding: 0.4rem;
+      border: var(--line-thickness) solid var(--navy);
+      background: transparent;
+      opacity: 0;
+      transform: translateY(20px) scale(0.9);
+      transition: background-color 0.15s linear;
+    }
+
+    .content-section.active .grade-item {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .content-section.active .grade-item:nth-child(1) { transition-delay: 0.1s; }
+    .content-section.active .grade-item:nth-child(2) { transition-delay: 0.15s; }
+    .content-section.active .grade-item:nth-child(3) { transition-delay: 0.2s; }
+    .content-section.active .grade-item:nth-child(4) { transition-delay: 0.25s; }
+    .content-section.active .grade-item:nth-child(5) { transition-delay: 0.3s; }
+    .content-section.active .grade-item:nth-child(6) { transition-delay: 0.35s; }
+    .content-section.active .grade-item:nth-child(7) { transition-delay: 0.4s; }
+    .content-section.active .grade-item:nth-child(8) { transition-delay: 0.45s; }
+    .content-section.active .grade-item:nth-child(9) { transition-delay: 0.5s; }
+    .content-section.active .grade-item:nth-child(10) { transition-delay: 0.55s; }
+    .content-section.active .grade-item:nth-child(11) { transition-delay: 0.6s; }
+
+    .grade-subject {
+      flex: 1;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: color 0.15s linear;
+    }
+
+    .grade-number {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--navy);
+      transition: color 0.15s linear;
+    }
+
+    .grade-item:hover {
+      background-color: var(--navy);
+      cursor: pointer;
+    }
+
+    .grade-item:hover .grade-subject,
+    .grade-item:hover .grade-number {
+      color: var(--offwhite);
+    }
+
+    .subject-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .subject-item {
+      padding: 1.5rem;
+      border: var(--line-thickness) solid var(--navy);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.4s ease;
+    }
+
+    .content-section.active .subject-item {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .content-section.active .subject-item:nth-child(1) { transition-delay: 0.1s; }
+    .content-section.active .subject-item:nth-child(2) { transition-delay: 0.15s; }
+    .content-section.active .subject-item:nth-child(3) { transition-delay: 0.2s; }
+    .content-section.active .subject-item:nth-child(4) { transition-delay: 0.25s; }
+    .content-section.active .subject-item:nth-child(5) { transition-delay: 0.3s; }
+    .content-section.active .subject-item:nth-child(6) { transition-delay: 0.35s; }
+
+    .approach-section {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .pricing-section {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .pricing-description {
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.4s ease;
+    }
+
+    .content-section.active .pricing-description {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .contact-form {
+      margin-bottom: 2rem;
+    }
+
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form select {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border: var(--line-thickness) solid var(--navy);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      background: transparent;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.4s ease;
+    }
+
+    .content-section.active .contact-form input,
+    .content-section.active .contact-form textarea,
+    .content-section.active .contact-form select {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .content-section.active .contact-form input:nth-child(1),
+    .content-section.active .contact-form select:nth-child(1),
+    .content-section.active .contact-form textarea:nth-child(1) {
+      transition-delay: 0.1s;
+    }
+
+    .content-section.active .contact-form input:nth-child(2),
+    .content-section.active .contact-form select:nth-child(2),
+    .content-section.active .contact-form textarea:nth-child(2) {
+      transition-delay: 0.15s;
+    }
+
+    .content-section.active .contact-form input:nth-child(3),
+    .content-section.active .contact-form select:nth-child(3),
+    .content-section.active .contact-form textarea:nth-child(3) {
+      transition-delay: 0.2s;
+    }
+
+    .content-section.active .contact-form button {
+      transition-delay: 0.3s;
+    }
+
+    .contact-form textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .contact-form button {
+      background: var(--navy);
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .content-section.active .contact-form button {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        margin-bottom: 1rem;
+      }
+
+      .nav-container {
+        display: none;
+      }
+
+      .next-button {
+        display: flex;
+      }
+
+      .title-text {
+        font-size: 3.5rem;
+      }
+
+      .title-wrapper {
+        min-height: 3.5rem;
+      }
+
+      .highlight {
+        height: 0.8rem;
+        bottom: 0.3rem;
+      }
+
+      .cursor {
+        height: 3.5rem;
+      }
+
+      .subject-list {
+        grid-template-columns: 1fr;
+      }
+
+      .grades-container {
+        grid-template-columns: 1fr 1fr;
+        margin-top: 0rem;
+      }
+
+      .about-content {
+        flex-direction: column;
+      }
+
+      .about-photo-container {
+        display: none;
+      }
+
+      .about-item, 
+      .approach-item, 
+      .pledge-item, 
+      .pricing-item {
+        padding-left: 1.5rem;
+      }
+      
+      .about-item::before, 
+      .approach-item::before, 
+      .pledge-item::before,
+      .pricing-item::before {
+        width: 0.8rem;
+        height: 0.8rem;
+      }
+
+      :root {
+        --nav-spacing: 2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .title-text {
+        font-size: 2.8rem;
+      }
+
+      .title-wrapper {
+        min-height: 2.8rem;
+      }
+
+      .cursor {
+        height: 2.8rem;
+      }
+
+      .grades-container {
+        grid-template-columns: 1fr;
+      }
+
+      :root {
+        --nav-spacing: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="title-wrapper">
+        <h1 class="title-text">
+          <span id="main-title"></span>
+          <span class="cursor"></span>
+          <span class="highlight"></span>
+        </h1>
+      </div>
+      <button class="next-button">
+        <span class="diamond"></span>
+        <span>Next</span>
+      </button>
+    </div>
+
+    <div class="content-area">
+      <div id="about" class="content-section"></div>
+      <div id="approach" class="content-section"></div>
+      <div id="subjects" class="content-section"></div>
+      <div id="pricing" class="content-section"></div>
+      <div id="contact" class="content-section"></div>
+    </div>
+
+    <div class="nav-container">
+      <div class="separator"></div>
+      <div class="nav-grid">
+        <div class="nav-item" data-section="about" data-title="Hello.">
+          <div class="nav-symbol">Ab</div>
+          <div class="nav-label">About</div>
+        </div>
+        <div class="nav-item" data-section="approach" data-title="Approach.">
+          <div class="nav-symbol">Ap</div>
+          <div class="nav-label">Approach</div>
+        </div>
+        <div class="nav-item" data-section="subjects" data-title="Subjects.">
+          <div class="nav-symbol">Su</div>
+          <div class="nav-label">Subjects</div>
+        </div>
+        <div class="nav-item" data-section="pricing" data-title="Pricing.">
+          <div class="nav-symbol">Pr</div>
+          <div class="nav-label">Pricing</div>
+        </div>
+        <div class="nav-item" data-section="contact" data-title="Contact.">
+          <div class="nav-symbol">Co</div>
+          <div class="nav-label">Contact</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <template id="about-template">
+    <div class="about-section">
+      <div class="about-content">
+        <div class="about-text">
+          <div class="about-item">
+            <h3>Who I Am</h3>
+            <p>My name is Abiral Gurung, a 16 year old who has completed his GCSEs. I have always been passionate about learning and helping others at improving in their own study. During my time at secondary school I have gained experience in tutoring through numerous sessions with friends in group and one to one video calls. Those experiences sparked an interest in me to tutor more professionally so I can help other students feel confident in their study too.</p>
+          </div>
+        </div>
+        <div class="about-photo-container">
+          <img src="portrait.png" alt="Portrait" class="about-photo">
+        </div>
+      </div>
+      <div class="grades-container">
+        <div class="grade-item">
+          <span class="grade-subject">Maths</span>
+          <span class="grade-number">9</span>
+        </div>
+        <div class="grade-item">
+          <span class="grade-subject">Biology</span>
+          <span class="grade-number">9</span>
+        </div>
+        <div class="grade-item">
+          <span class="grade-subject">Chemistry</span>
+          <span class="grade-number">9</span>
+        </div>
+        <div class="grade-item">
+          <span class="grade-subject">Physics</span>
+          <span class="grade-number">9</span>
+        </div>
+        <div class="grade-item">
+          <span class="grade-subject">Computer Science</span>
+          <span class="grade-number">9</span>
+        </div>
+        <div class="grade-item">
+          <span class="grade-subject">Information Technology</span>
+          <span class="grade-number">9</span>
+        </div>
+        <div class="grade-item">
+          <span class="grade-subject">History</span>
+          <span class="grade-number">9</span>
+        </div>
+        <div class="grade-item">
+          <span class="grade-subject">Further Maths</span>
+          <span class="grade-number">8</span>
+        </div>
+        <div class="grade-item">
+          <span class="grade-subject">English Literature</span>
+          <span class="grade-number">8</span>
+        </div>
+        <div class="grade-item">
+          <span class="grade-subject">English Language</span>
+          <span class="grade-number">8</span>
+        </div>
+        <div class="grade-item">
+          <span class="grade-subject">French</span>
+          <span class="grade-number">8</span>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="approach-template">
+    <div class="about-section">
+      <div class="approach-item">
+        <h3>Efficiency</h3>
+        <p>I believe that many students don't struggle due to lack ability but because their effort isn't always focused in the right direction. In my own experience, too much time was wasted in lessons due to teachers covering content that never came up in exams. Because of these experiences I refined my revision technique to place strong emphasis on targetted learning: prioritising widely applicable exam technique to ensure that I treated acing exams as a skill that can be practiced, not brute forced by staring at textbooks.</p>
+      </div>
+      <div class="approach-item">
+        <h3>Improvement</h3>
+        <p>In year 11, I found that I was relying on passive revision methods such as rereading notes or textbooks. These techniques felt productive but were quite poor for retaining information. Afterwards, I started using other methods such as active recall, spaced repetition and past papers to push myself out of my comfort zone. Initially this shift was difficult but over time I noticed a marked improvement during real exams. Often true improvement comes from approach instead of effort.</p>
+      </div>
+      <div class="pledge-item">
+        <h3>My Pledge</h3>
+        <p>My approach is built on the belief that successful grades aren't about intelligence or endless hours but about smart targeted effort. I pledge to help my tutees cut through the noise and focus on what actually works to treat exam success as a skill they can master.</p>
+      </div>
+    </div>
+  </template>
+
+  <template id="subjects-template">
+    <div class="subject-list">
+      <div class="subject-item">
+        <h3>Mathematics</h3>
+        <p>Comprehensive coverage of both the GCSE Maths and Further Maths cirriculum. I can go over both theory/skills alongside exam practice.</p>
+      </div>
+      <div class="subject-item">
+        <h3>English</h3>
+        <p>Includes both Literature and Language, I will mainly prioritise past papers however I am happy to teach exam content.</p>
+      </div>
+      <div class="subject-item">
+        <h3>Biology</h3>
+        <p>Cell biology, genetics, ecology, evolution, etc. Includes both exam strategies and theory.</p>
+      </div>
+      <div class="subject-item">
+        <h3>Chemistry</h3>
+        <p>Atomic structure, bonding, quantitative chemistry, etc. Includes both exam strategies and theory.</p>
+      </div>
+      <div class="subject-item">
+        <h3>Physics</h3>
+        <p>Forces, energy, waves, electricity, magnetism, etc. Includes both exam strategies and theory.</p>
+      </div>
+      <div class="subject-item">
+        <h3>Computer Science</h3>
+        <p>Programming concepts, algorithms and theory tailored to GCSE requirements.</p>
+      </div>
+    </div>
+  </template>
+
+  <template id="pricing-template">
+    <div class="pricing-section">
+      <div class="pricing-item">
+        <h3>Individual Sessions - £15/hour</h3>
+        <p>Each one to one session is priced at £15 per hour and is fully tailored to the student's needs and goals. Lessons are delivered via video call and supported by a whiteboard app so I can tutor in real time, ensuring sessions are clear, engaging and productive. I offer a flexible schedule with wide availability which we can discuss to find times that suit you best.</p>
+      </div>
+      <div class="pricing-item">
+        <h3>Free Taster Session</h3>
+        <p>I am offering a taster session free of charge so that I can get to know the student better and also to answer any necessary questions that they may have. In the session, we can go through some subjects to give you a feel for how I teach while keeping things low pressure. There isn't an obligation to continue since it's simply a chance to see if we're a good fit and to make sure any ongoing tutoring is tailored from day one.</p>
+      </div>
+    </div>
+  </template>
+
+  <template id="contact-template">
+    <form class="contact-form" action="https://formspree.io/f/xpwlaonk" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Email Address" required>
+      <input type="tel" name="phone" placeholder="Phone Number">
+      <select name="subject" required>
+        <option value="" disabled selected>Subject Needed</option>
+        <option>Mathematics</option>
+        <option>English</option>
+        <option>Biology</option>
+        <option>Chemistry</option>
+        <option>Physics</option>
+        <option>Computer Science</option>
+        <option>Other</option>
+      </select>
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </template>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.content-section').forEach(section => section.innerHTML = '');
+      document.body.style.opacity = '1';
+      
+      const navItems = document.querySelectorAll('.nav-item');
+      const mainTitle = document.getElementById('main-title');
+      const highlight = document.querySelector('.highlight');
+      const cursor = document.querySelector('.cursor');
+      const separator = document.querySelector('.separator');
+      const navGrid = document.querySelector('.nav-grid');
+      const nextButton = document.querySelector('.next-button');
+      let isAnimating = false;
+      let currentSection = 'about';
+      
+      const sections = [
+        { id: 'about', title: 'Hello.' },
+        { id: 'approach', title: 'Approach.' },
+        { id: 'subjects', title: 'Subjects.' },
+        { id: 'pricing', title: 'Pricing.' },
+        { id: 'contact', title: 'Contact.' }
+      ];
+      
+      const sectionTemplates = {
+        about: document.getElementById('about-template'),
+        approach: document.getElementById('approach-template'),
+        subjects: document.getElementById('subjects-template'),
+        pricing: document.getElementById('pricing-template'),
+        contact: document.getElementById('contact-template')
+      };
+      
+      setTimeout(() => {
+        typeText("Hello.", 0, () => {
+          cursor.style.opacity = '1';
+          setTimeout(() => {
+            highlight.style.width = '100%';
+            setTimeout(() => {
+              separator.style.opacity = '1';
+              separator.style.transform = 'translateY(0)';
+              setTimeout(() => {
+                navGrid.style.opacity = '1';
+                navGrid.style.transform = 'translateY(0)';
+                animateNavItems();
+                setTimeout(() => {
+                  loadSection('about');
+                  const aboutSection = document.getElementById('about');
+                  aboutSection.style.display = 'block';
+                  aboutSection.offsetHeight;
+                  aboutSection.classList.add('active');
+                  document.querySelector('.nav-item[data-section="about"]').classList.add('active');
+                  nextButton.classList.add('active');
+                  setupNavigation();
+                  setupNextButton();
+                }, 500);
+              }, 200);
+            }, 200);
+          }, 300);
+        });
+      }, 200);
+      
+      function animateNavItems() {
+        navItems.forEach((item, index) => {
+          setTimeout(() => {
+            item.style.opacity = '1';
+            item.style.transform = 'translateY(0)';
+          }, index * 100);
+        });
+      }
+      
+      function setupNavigation() {
+        navItems.forEach(item => {
+          item.addEventListener('click', function() {
+            if (isAnimating) return;
+            const sectionId = this.getAttribute('data-section');
+            const sectionTitle = this.getAttribute('data-title');
+            if (sectionId === currentSection) return;
+            startAnimationSequence(this, sectionId, sectionTitle);
+          });
+        });
+      }
+      
+      function setupNextButton() {
+        if (nextButton) {
+          nextButton.addEventListener('click', () => {
+            if (isAnimating) return;
+            const currentIndex = sections.findIndex(section => section.id === currentSection);
+            const nextIndex = currentSection === 'contact' ? 0 : currentIndex + 1;
+            const { id: sectionId, title: sectionTitle } = sections[nextIndex];
+            const navItem = document.querySelector(`.nav-item[data-section="${sectionId}"]`);
+            startAnimationSequence(navItem, sectionId, sectionTitle);
+          });
+        }
+      }
+      
+      function loadSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        const template = sectionTemplates[sectionId];
+        if (template) {
+          section.innerHTML = '';
+          section.appendChild(template.content.cloneNode(true));
+          if (sectionId === 'contact') {
+            nextButton.innerHTML = '<span class="diamond"></span><span>Back</span>';
+            const contactForm = section.querySelector('.contact-form');
+            if (contactForm) {
+              contactForm.addEventListener('submit', e => {
+                e.preventDefault();
+                fetch(contactForm.action, {
+                  method: 'POST',
+                  body: new FormData(contactForm),
+                  headers: {
+                    'Accept': 'application/json'
+                  }
+                })
+                .then(response => {
+                  if (response.ok) {
+                    alert('Thank you for your message! I will respond within 24 hours.');
+                    contactForm.reset();
+                  } else {
+                    alert('There was an error sending your message. Please try again.');
+                  }
+                })
+                .catch(() => {
+                  alert('There was an error sending your message. Please try again.');
+                });
+              });
+            }
+          } else {
+            nextButton.innerHTML = '<span class="diamond"></span><span>Next</span>';
+          }
+        }
+      }
+      
+      function hideSection(section) {
+        section.classList.remove('active');
+        setTimeout(() => section.innerHTML = '', 400);
+      }
+      
+      function resetNavItems() {
+        navItems.forEach(item => {
+          item.classList.remove('active');
+          item.style.backgroundColor = '';
+          item.querySelector('.nav-symbol').style.color = '';
+          item.querySelector('.nav-label').style.color = '';
+        });
+      }
+      
+      function activateSection(sectionId) {
+        loadSection(sectionId);
+        const section = document.getElementById(sectionId);
+        section.style.display = 'block';
+        section.offsetHeight;
+        section.classList.add('active');
+      }
+      
+      function startAnimationSequence(clickedItem, sectionId, newTitleText) {
+        isAnimating = true;
+        navItems.forEach(item => item.classList.add('disabled'));
+        if (currentSection) hideSection(document.getElementById(currentSection));
+        resetNavItems();
+        if (clickedItem) {
+          clickedItem.style.backgroundColor = 'var(--navy)';
+          clickedItem.querySelector('.nav-symbol').style.color = 'white';
+          clickedItem.querySelector('.nav-label').style.color = 'white';
+        }
+        highlight.style.width = '0';
+        
+        setTimeout(() => {
+          deleteText(mainTitle.textContent.length, () => {
+            cursor.style.opacity = '1';
+            typeText(newTitleText, 0, () => {
+              highlight.style.width = '100%';
+              setTimeout(() => {
+                cursor.style.opacity = '0';
+                if (clickedItem) clickedItem.classList.add('active');
+                activateSection(sectionId);
+                currentSection = sectionId;
+                setTimeout(() => {
+                  isAnimating = false;
+                  navItems.forEach(item => item.classList.remove('disabled'));
+                }, 400);
+              }, 800);
+            });
+          });
+        }, 300);
+      }
+      
+      function deleteText(length, callback) {
+        if (length > 0) {
+          mainTitle.textContent = mainTitle.textContent.substring(0, length - 1);
+          cursor.style.left = `${mainTitle.offsetWidth}px`;
+          setTimeout(() => deleteText(length - 1, callback), 50);
+        } else if (callback) callback();
+      }
+      
+      function typeText(text, i, callback) {
+        if (i < text.length) {
+          mainTitle.textContent = text.substring(0, i + 1);
+          cursor.style.left = `${mainTitle.offsetWidth}px`;
+          setTimeout(() => typeText(text, i + 1, callback), 80);
+        } else if (callback) callback();
+      }
+    });
+  </script>
+</body>
+</html>
