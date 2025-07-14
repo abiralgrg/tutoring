@@ -614,10 +614,6 @@
         flex-direction: column;
       }
 
-      .about-photo-container {
-        display: none;
-      }
-
       .about-item, 
       .approach-item, 
       .pledge-item, 
@@ -635,6 +631,12 @@
 
       :root {
         --nav-spacing: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .about-photo-container {
+        display: none;
       }
     }
 
@@ -869,7 +871,7 @@
       const contentArea = document.querySelector('.content-area');
       let isAnimating = false;
       let currentSection = 'about';
-      let isMobileLayout = window.innerWidth <= 768 || window.innerHeight <= 1000;
+      let isMobileLayout = window.innerHeight <= 910 || window.innerWidth <= 768;
       
       const sections = [
         { id: 'about', title: 'Hello.' },
@@ -888,7 +890,7 @@
       };
 
       function toggleLayout() {
-        const isMobile = window.innerWidth <= 768 || window.innerHeight <= 1000;
+        const isMobile = window.innerHeight <= 910 || window.innerWidth <= 768;
         if (isMobile !== isMobileLayout) {
           isMobileLayout = isMobile;
           if (isMobileLayout) {
@@ -905,6 +907,10 @@
             navGrid.style.transform = 'translateY(0)';
             animateNavItems();
           }
+        }
+        const photoContainer = document.querySelector('.about-photo-container');
+        if (photoContainer) {
+          photoContainer.style.display = window.innerWidth <= 768 ? 'none' : 'block';
         }
       }
 
