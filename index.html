@@ -869,7 +869,7 @@
       const contentArea = document.querySelector('.content-area');
       let isAnimating = false;
       let currentSection = 'about';
-      let isMobileLayout = window.innerWidth <= 768 || window.innerHeight <= 700;
+      let isMobileLayout = window.innerWidth <= 768 || window.innerHeight <= 1000;
       
       const sections = [
         { id: 'about', title: 'Hello.' },
@@ -888,7 +888,7 @@
       };
 
       function toggleLayout() {
-        const isMobile = window.innerWidth <= 768 || window.innerHeight <= 700;
+        const isMobile = window.innerWidth <= 768 || window.innerHeight <= 1000;
         if (isMobile !== isMobileLayout) {
           isMobileLayout = isMobile;
           if (isMobileLayout) {
