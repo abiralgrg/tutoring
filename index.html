@@ -170,6 +170,11 @@
       margin-top: auto;
       padding-top: var(--nav-spacing);
       flex-shrink: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .nav-container.hidden {
+      display: none;
     }
 
     .separator {
@@ -773,11 +778,11 @@
     <div class="about-section">
       <div class="approach-item">
         <h3>Efficiency</h3>
-        <p>I believe that many students don't struggle due to lack ability but because their effort isn't always focused in the right direction. In my own experience, too much time was wasted in lessons due to teachers covering content that never came up in exams. Because of these experiences I refined my revision technique to place strong emphasis on targetted learning: prioritising widely applicable exam technique to ensure that I treated acing exams as a skill that can be practiced, not brute forced by staring at textbooks.</p>
+        <p>I believe that many students don't struggle due to lack of ability but because their effort isn't always focused in the right direction. In my own experience, too much time was wasted in lessons due to teachers covering content that rarely appeared in exams. Because of these experiences I refined my revision technique to place strong emphasis on targeted learning: prioritising widely applicable exam technique to ensure that I treated acing exams as a skill that can be practiced, not brute forced by staring at textbooks.</p>
       </div>
       <div class="approach-item">
         <h3>Improvement</h3>
-        <p>In year 11, I found that I was relying on passive revision methods such as rereading notes or textbooks. These techniques felt productive but were quite poor for retaining information. Afterwards, I started using other methods such as active recall, spaced repetition and past papers to push myself out of my comfort zone. Initially this shift was difficult but over time I noticed a marked improvement during real exams. Often true improvement comes from approach instead of effort.</p>
+        <p>In year 11, I found that I was relying on passive revision methods such as rereading notes or textbooks. These techniques felt productive but were quite poor for retaining information. Afterwards, I started using other methods such as active recall, spaced repetition and past papers to push myself out of my comfort zone. Initially this shift was difficult but over time I noticed a significant improvement during real exams. Often true improvement comes from approach instead of effort.</p>
       </div>
       <div class="pledge-item">
         <h3>My Pledge</h3>
@@ -830,7 +835,7 @@
 
   <template id="contact-template">
     <form class="contact-form" action="https://formspree.io/f/xpwlaonk" method="POST">
-      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="text" dollari="Your Name" placeholder="Your Name" required>
       <input type="email" name="email" placeholder="Email Address" required>
       <input type="tel" name="phone" placeholder="Phone Number">
       <select name="subject" required>
@@ -860,8 +865,11 @@
       const separator = document.querySelector('.separator');
       const navGrid = document.querySelector('.nav-grid');
       const nextButton = document.querySelector('.next-button');
+      const navContainer = document.querySelector('.nav-container');
+      const contentArea = document.querySelector('.content-area');
       let isAnimating = false;
       let currentSection = 'about';
+      let isMobileLayout = window.innerWidth <= 768;
       
       const sections = [
         { id: 'about', title: 'Hello.' },
@@ -878,36 +886,72 @@
         pricing: document.getElementById('pricing-template'),
         contact: document.getElementById('contact-template')
       };
-      
+
+      function checkNavOverlap() {
+        if (!navContainer || !contentArea) return false;
+        const navRect = navContainer.getBoundingClientRect();
+        const contentRect = contentArea.getBoundingClientRect();
+        return navRect.top < contentRect.bottom && navRect.bottom > contentRect.top;
+      }
+
+      function toggleLayout() {
+        const isMobile = window.innerWidth <= 768 || checkNavOverlap();
+        if (isMobile !== isMobileLayout) {
+          isMobileLayout = isMobile;
+          if (isMobileLayout) {
+            navContainer.classList.add('hidden');
+            nextButton.style.display = 'flex';
+            setTimeout(() => nextButton.classList.add('active'), 100);
+          } else {
+            navContainer.classList.remove('hidden');
+            nextButton.classList.remove('active');
+            setTimeout(() => nextButton.style.display = 'none', 300);
+            separator.style.opacity = '1';
+            separator.style.transform = 'translateY(0)';
+            navGrid.style.opacity = '1';
+            navGrid.style.transform = 'translateY(0)';
+            animateNavItems();
+          }
+        }
+      }
+
       setTimeout(() => {
         typeText("Hello.", 0, () => {
           cursor.style.opacity = '1';
           setTimeout(() => {
             highlight.style.width = '100%';
             setTimeout(() => {
-              separator.style.opacity = '1';
-              separator.style.transform = 'translateY(0)';
-              setTimeout(() => {
+              if (!isMobileLayout) {
+                separator.style.opacity = '1';
+                separator.style.transform = 'translateY(0)';
                 navGrid.style.opacity = '1';
                 navGrid.style.transform = 'translateY(0)';
                 animateNavItems();
-                setTimeout(() => {
-                  loadSection('about');
-                  const aboutSection = document.getElementById('about');
-                  aboutSection.style.display = 'block';
-                  aboutSection.offsetHeight;
-                  aboutSection.classList.add('active');
-                  document.querySelector('.nav-item[data-section="about"]').classList.add('active');
+              }
+              setTimeout(() => {
+                loadSection('about');
+                const aboutSection = document.getElementById('about');
+                aboutSection.style.display = 'block';
+                aboutSection.offsetHeight;
+                aboutSection.classList.add('active');
+                document.querySelector('.nav-item[data-section="about"]').classList.add('active');
+                if (isMobileLayout) {
+                  nextButton.style.display = 'flex';
                   nextButton.classList.add('active');
-                  setupNavigation();
-                  setupNextButton();
-                }, 500);
-              }, 200);
+                }
+                setupNavigation();
+                setupNextButton();
+                toggleLayout();
+              }, 500);
             }, 200);
           }, 300);
         });
       }, 200);
-      
+
+      window.addEventListener('resize', () => {
+        toggleLayout();
+      });
+
       function animateNavItems() {
         navItems.forEach((item, index) => {
           setTimeout(() => {
