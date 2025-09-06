@@ -238,7 +238,8 @@
     .about-item,
     .approach-item,
     .pledge-item,
-    .pricing-item {
+    .pricing-item,
+    .contact-item {
       position: relative;
       padding-left: 2rem;
       opacity: 0;
@@ -249,7 +250,8 @@
     .content-section.active .about-item,
     .content-section.active .approach-item,
     .content-section.active .pledge-item,
-    .content-section.active .pricing-item {
+    .content-section.active .pricing-item,
+    .content-section.active .contact-item {
       opacity: 1;
       transform: translateY(0);
     }
@@ -257,28 +259,32 @@
     .content-section.active .about-item:nth-child(1),
     .content-section.active .approach-item:nth-child(1),
     .content-section.active .pledge-item:nth-child(1),
-    .content-section.active .pricing-item:nth-child(1) {
+    .content-section.active .pricing-item:nth-child(1),
+    .content-section.active .contact-item:nth-child(1) {
       transition-delay: 0.1s;
     }
 
     .content-section.active .about-item:nth-child(2),
     .content-section.active .approach-item:nth-child(2),
     .content-section.active .pledge-item:nth-child(2),
-    .content-section.active .pricing-item:nth-child(2) {
+    .content-section.active .pricing-item:nth-child(2),
+    .content-section.active .contact-item:nth-child(2) {
       transition-delay: 0.2s;
     }
 
     .content-section.active .about-item:nth-child(3),
     .content-section.active .approach-item:nth-child(3),
     .content-section.active .pledge-item:nth-child(3),
-    .content-section.active .pricing-item:nth-child(3) {
+    .content-section.active .pricing-item:nth-child(3),
+    .content-section.active .contact-item:nth-child(3) {
       transition-delay: 0.3s;
     }
 
     .about-item::before,
     .approach-item::before,
     .pledge-item::before,
-    .pricing-item::before {
+    .pricing-item::before,
+    .contact-item::before {
       content: "";
       position: absolute;
       left: 0;
@@ -294,7 +300,8 @@
     .content-section.active .about-item::before,
     .content-section.active .approach-item::before,
     .content-section.active .pledge-item::before,
-    .content-section.active .pricing-item::before {
+    .content-section.active .pricing-item::before,
+    .content-section.active .contact-item::before {
       transform: rotate(45deg) scale(1);
       opacity: 1;
     }
@@ -302,7 +309,8 @@
     .about-item:hover::before,
     .approach-item:hover::before,
     .pledge-item:hover::before,
-    .pricing-item:hover::before {
+    .pricing-item:hover::before,
+    .contact-item:hover::before {
       background-color: var(--navy);
       animation: diamondPulse 1.5s infinite;
     }
@@ -310,14 +318,16 @@
     .about-item:hover,
     .approach-item:hover,
     .pledge-item:hover,
-    .pricing-item:hover {
+    .pricing-item:hover,
+    .contact-item:hover {
       cursor: pointer;
     }
 
     .about-item h3,
     .approach-item h3,
     .pledge-item h3,
-    .pricing-item h3 {
+    .pricing-item h3,
+    .contact-item h3 {
       font-size: 1.25rem;
       margin-bottom: 0.75rem;
       position: relative;
@@ -327,7 +337,8 @@
     .about-item h3::after,
     .approach-item h3::after,
     .pledge-item h3::after,
-    .pricing-item h3::after {
+    .pricing-item h3::after,
+    .contact-item h3::after {
       content: "";
       position: absolute;
       bottom: -0.25rem;
@@ -341,7 +352,8 @@
     .about-item:hover h3::after,
     .approach-item:hover h3::after,
     .pledge-item:hover h3::after,
-    .pricing-item:hover h3::after {
+    .pricing-item:hover h3::after,
+    .contact-item:hover h3::after {
       width: 100%;
     }
 
@@ -501,74 +513,28 @@
       transform: translateY(0);
     }
 
-    .contact-form {
-      margin-bottom: 2rem;
+    .contact-section {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
     }
 
-    .contact-form input,
-    .contact-form textarea,
-    .contact-form select {
-      width: 100%;
-      padding: 0.8rem;
-      margin-bottom: 1rem;
+    .phone-number {
+      display: inline-block;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--navy);
+      text-decoration: none;
       border: var(--line-thickness) solid var(--navy);
-      font-family: 'Inter', sans-serif;
-      font-size: 1rem;
-      background: transparent;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.4s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      margin-top: 0.5rem;
     }
 
-    .content-section.active .contact-form input,
-    .content-section.active .contact-form textarea,
-    .content-section.active .contact-form select {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .content-section.active .contact-form input:nth-child(1),
-    .content-section.active .contact-form select:nth-child(1),
-    .content-section.active .contact-form textarea:nth-child(1) {
-      transition-delay: 0.1s;
-    }
-
-    .content-section.active .contact-form input:nth-child(2),
-    .content-section.active .contact-form select:nth-child(2),
-    .content-section.active .contact-form textarea:nth-child(2) {
-      transition-delay: 0.15s;
-    }
-
-    .content-section.active .contact-form input:nth-child(3),
-    .content-section.active .contact-form select:nth-child(3),
-    .content-section.active .contact-form textarea:nth-child(3) {
-      transition-delay: 0.2s;
-    }
-
-    .content-section.active .contact-form button {
-      transition-delay: 0.3s;
-    }
-
-    .contact-form textarea {
-      min-height: 150px;
-      resize: vertical;
-    }
-
-    .contact-form button {
+    .phone-number:hover {
       background: var(--navy);
-      color: white;
-      border: none;
-      padding: 0.8rem 2rem;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.4s ease;
-      opacity: 0;
-      transform: translateY(10px);
-    }
-
-    .content-section.active .contact-form button {
-      opacity: 1;
-      transform: translateY(0);
+      color: var(--offwhite);
     }
 
     @media (max-width: 768px) {
@@ -617,14 +583,16 @@
       .about-item, 
       .approach-item, 
       .pledge-item, 
-      .pricing-item {
+      .pricing-item,
+      .contact-item {
         padding-left: 1.5rem;
       }
       
       .about-item::before, 
       .approach-item::before, 
       .pledge-item::before,
-      .pricing-item::before {
+      .pricing-item::before,
+      .contact-item::before {
         width: 0.8rem;
         height: 0.8rem;
       }
@@ -836,23 +804,13 @@
   </template>
 
   <template id="contact-template">
-    <form class="contact-form" action="https://formspree.io/f/xpwlaonk" method="POST">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Email Address" required>
-      <input type="tel" name="phone" placeholder="Phone Number">
-      <select name="subject" required>
-        <option value="" disabled selected>Subject Needed</option>
-        <option>Mathematics</option>
-        <option>English</option>
-        <option>Biology</option>
-        <option>Chemistry</option>
-        <option>Physics</option>
-        <option>Computer Science</option>
-        <option>Other</option>
-      </select>
-      <textarea name="message" placeholder="Your Message" required></textarea>
-      <button type="submit">Send Message</button>
-    </form>
+    <div class="contact-section">
+      <div class="contact-item">
+        <h3>Get in Touch</h3>
+        <p>I am free anytime to discuss tuition. Please message me using this number and I will respond in under 24 hours.</p>
+        <a href="tel:+44 7826 211058" class="phone-number">+44 7826 211058</a>
+      </div>
+    </div>
   </template>
 
   <script>
@@ -1003,30 +961,6 @@
           section.appendChild(template.content.cloneNode(true));
           if (sectionId === 'contact') {
             nextButton.innerHTML = '<span class="diamond"></span><span>Back</span>';
-            const contactForm = section.querySelector('.contact-form');
-            if (contactForm) {
-              contactForm.addEventListener('submit', e => {
-                e.preventDefault();
-                fetch(contactForm.action, {
-                  method: 'POST',
-                  body: new FormData(contactForm),
-                  headers: {
-                    'Accept': 'application/json'
-                  }
-                })
-                .then(response => {
-                  if (response.ok) {
-                    alert('Thank you for your message! I will respond within 24 hours.');
-                    contactForm.reset();
-                  } else {
-                    alert('There was an error sending your message. Please try again.');
-                  }
-                })
-                .catch(() => {
-                  alert('There was an error sending your message. Please try again.');
-                });
-              });
-            }
           } else {
             nextButton.innerHTML = '<span class="diamond"></span><span>Next</span>';
           }
