@@ -14,14 +14,10 @@
       --nav-spacing: 3px;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Inter', sans-serif;   
+      font-family: 'Inter', sans-serif;
       background: var(--offwhite);
       color: var(--text);
       line-height: 1.6;
@@ -51,11 +47,7 @@
       justify-content: space-between;
     }
 
-    .title-wrapper {
-      display: inline-block;
-      position: relative;
-      min-height: 5rem;
-    }
+    .title-wrapper { display: inline-block; position: relative; min-height: 5rem; }
 
     .title-text {
       font-size: 5rem;
@@ -109,20 +101,11 @@
       transform: translateY(10px);
     }
 
-    .next-button.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .next-button.active { opacity: 1; transform: translateY(0); }
 
-    .next-button:hover {
-      background: var(--navy);
-      color: var(--offwhite);
-    }
+    .next-button:hover { background: var(--navy); color: var(--offwhite); }
 
-    .next-button:hover .diamond {
-      background: var(--offwhite);
-      border-color: var(--offwhite);
-    }
+    .next-button:hover .diamond { background: var(--offwhite); border-color: var(--offwhite); }
 
     .diamond {
       width: 0.8rem;
@@ -132,20 +115,18 @@
       transition: all 0.3s ease;
     }
 
-    .next-button:active .diamond {
-      transform: rotate(45deg) scale(0.9);
-    }
+    .next-button:active .diamond { transform: rotate(45deg) scale(0.9); }
 
-    @keyframes blink {
-      from, to { opacity: 1; }
-      50% { opacity: 0; }
-    }
+    @keyframes blink { from, to { opacity: 1; } 50% { opacity: 0; } }
 
     .content-area {
       flex: 1;
       position: relative;
       display: flex;
       flex-direction: column;
+
+      /* COMPACT GRADES SPACING: give content a little safe room above the nav */
+      padding-bottom: 1.5rem;
     }
 
     .content-section {
@@ -173,9 +154,7 @@
       transition: opacity 0.3s ease, transform 0.3s ease;
     }
 
-    .nav-container.hidden {
-      display: none;
-    }
+    .nav-container.hidden { display: none; }
 
     .separator {
       height: var(--line-thickness);
@@ -210,15 +189,9 @@
       transform: translateY(10px);
     }
 
-    .nav-item.active {
-      background: var(--navy);
-      color: white;
-    }
+    .nav-item.active { background: var(--navy); color: white; }
 
-    .nav-item.disabled {
-      pointer-events: none;
-      opacity: 0.5;
-    }
+    .nav-item.disabled { pointer-events: none; opacity: 0.5; }
 
     .nav-symbol {
       font-size: 2.2rem;
@@ -260,25 +233,19 @@
     .content-section.active .approach-item:nth-child(1),
     .content-section.active .pledge-item:nth-child(1),
     .content-section.active .pricing-item:nth-child(1),
-    .content-section.active .contact-item:nth-child(1) {
-      transition-delay: 0.1s;
-    }
+    .content-section.active .contact-item:nth-child(1) { transition-delay: 0.1s; }
 
     .content-section.active .about-item:nth-child(2),
     .content-section.active .approach-item:nth-child(2),
     .content-section.active .pledge-item:nth-child(2),
     .content-section.active .pricing-item:nth-child(2),
-    .content-section.active .contact-item:nth-child(2) {
-      transition-delay: 0.2s;
-    }
+    .content-section.active .contact-item:nth-child(2) { transition-delay: 0.2s; }
 
     .content-section.active .about-item:nth-child(3),
     .content-section.active .approach-item:nth-child(3),
     .content-section.active .pledge-item:nth-child(3),
     .content-section.active .pricing-item:nth-child(3),
-    .content-section.active .contact-item:nth-child(3) {
-      transition-delay: 0.3s;
-    }
+    .content-section.active .contact-item:nth-child(3) { transition-delay: 0.3s; }
 
     .about-item::before,
     .approach-item::before,
@@ -319,9 +286,7 @@
     .approach-item:hover,
     .pledge-item:hover,
     .pricing-item:hover,
-    .contact-item:hover {
-      cursor: pointer;
-    }
+    .contact-item:hover { cursor: pointer; }
 
     .about-item h3,
     .approach-item h3,
@@ -353,9 +318,7 @@
     .approach-item:hover h3::after,
     .pledge-item:hover h3::after,
     .pricing-item:hover h3::after,
-    .contact-item:hover h3::after {
-      width: 100%;
-    }
+    .contact-item:hover h3::after { width: 100%; }
 
     @keyframes diamondPulse {
       0%, 100% { transform: rotate(45deg) scale(1); }
@@ -365,18 +328,21 @@
     .about-section {
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+
+      /* COMPACT GRADES SPACING: reduce global vertical spacing in About */
+      gap: 0.75rem;
     }
 
     .about-content {
       display: flex;
       gap: 2rem;
       align-items: flex-start;
+
+      /* COMPACT GRADES SPACING: reduce bottom space under the top block */
+      margin-bottom: 0.25rem;
     }
 
-    .about-text {
-      flex: 1;
-    }
+    .about-text { flex: 1; }
 
     .about-photo-container {
       flex: 0 0 auto;
@@ -402,16 +368,19 @@
       aspect-ratio: 707/884;
     }
 
+    .grades-heading {
+      /* COMPACT GRADES SPACING: pull heading closer to the top content */
+      margin-top: 0.1rem;
+      margin-bottom: 0.1rem;
+    }
+
     .grades-container {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 0.5rem;
-      margin-top: 0rem; /* changed from -3rem so the new Grades heading doesn't overlap */
-    }
 
-    .grades-heading {
-      margin-top: 0.25rem;
-      margin-bottom: -0.75rem; /* keeps spacing tight without affecting any animations */
+      /* COMPACT GRADES SPACING: remove extra top offset entirely */
+      margin-top: 0;
     }
 
     .grade-item {
@@ -457,15 +426,10 @@
       transition: color 0.15s linear;
     }
 
-    .grade-item:hover {
-      background-color: var(--navy);
-      cursor: pointer;
-    }
+    .grade-item:hover { background-color: var(--navy); cursor: pointer; }
 
     .grade-item:hover .grade-subject,
-    .grade-item:hover .grade-number {
-      color: var(--offwhite);
-    }
+    .grade-item:hover .grade-number { color: var(--offwhite); }
 
     .subject-list {
       display: grid;
@@ -482,10 +446,7 @@
       transition: all 0.4s ease;
     }
 
-    .content-section.active .subject-item {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .content-section.active .subject-item { opacity: 1; transform: translateY(0); }
 
     .content-section.active .subject-item:nth-child(1) { transition-delay: 0.1s; }
     .content-section.active .subject-item:nth-child(2) { transition-delay: 0.15s; }
@@ -494,17 +455,9 @@
     .content-section.active .subject-item:nth-child(5) { transition-delay: 0.3s; }
     .content-section.active .subject-item:nth-child(6) { transition-delay: 0.35s; }
 
-    .approach-section {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
+    .approach-section { display: flex; flex-direction: column; gap: 2rem; }
 
-    .pricing-section {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
+    .pricing-section { display: flex; flex-direction: column; gap: 2rem; }
 
     .pricing-description {
       margin-bottom: 1.5rem;
@@ -513,16 +466,9 @@
       transition: all 0.4s ease;
     }
 
-    .content-section.active .pricing-description {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .content-section.active .pricing-description { opacity: 1; transform: translateY(0); }
 
-    .contact-section {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
+    .contact-section { display: flex; flex-direction: column; gap: 2rem; }
 
     .phone-number {
       display: inline-block;
@@ -537,64 +483,32 @@
       margin-top: 0.5rem;
     }
 
-    .phone-number:hover {
-      background: var(--navy);
-      color: var(--offwhite);
-    }
+    .phone-number:hover { background: var(--navy); color: var(--offwhite); }
 
     @media (max-width: 768px) {
-      .header {
-        margin-bottom: 1rem;
-      }
+      .header { margin-bottom: 1rem; }
+      .nav-container { display: none; }
+      .next-button { display: flex; }
 
-      .nav-container {
-        display: none;
-      }
+      .title-text { font-size: 3.5rem; }
+      .title-wrapper { min-height: 3.5rem; }
+      .highlight { height: 0.8rem; bottom: 0.3rem; }
+      .cursor { height: 3.5rem; }
 
-      .next-button {
-        display: flex;
-      }
+      .subject-list { grid-template-columns: 1fr; }
 
-      .title-text {
-        font-size: 3.5rem;
-      }
+      .grades-container { grid-template-columns: 1fr 1fr; margin-top: 0rem; }
 
-      .title-wrapper {
-        min-height: 3.5rem;
-      }
+      .about-content { flex-direction: column; }
 
-      .highlight {
-        height: 0.8rem;
-        bottom: 0.3rem;
-      }
-
-      .cursor {
-        height: 3.5rem;
-      }
-
-      .subject-list {
-        grid-template-columns: 1fr;
-      }
-
-      .grades-container {
-        grid-template-columns: 1fr 1fr;
-        margin-top: 0rem;
-      }
-
-      .about-content {
-        flex-direction: column;
-      }
-
-      .about-item, 
-      .approach-item, 
-      .pledge-item, 
+      .about-item,
+      .approach-item,
+      .pledge-item,
       .pricing-item,
-      .contact-item {
-        padding-left: 1.5rem;
-      }
-      
-      .about-item::before, 
-      .approach-item::before, 
+      .contact-item { padding-left: 1.5rem; }
+
+      .about-item::before,
+      .approach-item::before,
       .pledge-item::before,
       .pricing-item::before,
       .contact-item::before {
@@ -602,37 +516,21 @@
         height: 0.8rem;
       }
 
-      :root {
-        --nav-spacing: 2rem;
-      }
+      :root { --nav-spacing: 2rem; }
     }
 
     @media (max-width: 768px) {
-      .about-photo-container {
-        display: none;
-      }
+      .about-photo-container { display: none; }
     }
 
     @media (max-width: 480px) {
-      .title-text {
-        font-size: 2.8rem;
-      }
+      .title-text { font-size: 2.8rem; }
+      .title-wrapper { min-height: 2.8rem; }
+      .cursor { height: 2.8rem; }
 
-      .title-wrapper {
-        min-height: 2.8rem;
-      }
+      .grades-container { grid-template-columns: 1fr; }
 
-      .cursor {
-        height: 2.8rem;
-      }
-
-      .grades-container {
-        grid-template-columns: 1fr;
-      }
-
-      :root {
-        --nav-spacing: 1.5rem;
-      }
+      :root { --nav-spacing: 1.5rem; }
     }
   </style>
 </head>
@@ -693,7 +591,7 @@
         <div class="about-text">
           <div class="about-item">
             <h3>Who I Am</h3>
-            <p>My name is Abiral Gurung, a 17 year old who has completed his GCSEs and is now attending college. I have always been passionate about learning and helping others at improving in their own study. During my time at secondary school I have gained experience in tutoring through numerous sessions with friends in group and one to one video calls. Those experiences sparked an interest in me to tutor more professionally so I can help other students feel confident in their study too.</p>
+            <p>My name is Abiral Gurung, a 16 year old who has completed his GCSEs. I have always been passionate about learning and helping others at improving in their own study. During my time at secondary school I have gained experience in tutoring through numerous sessions with friends in group and one to one video calls. Those experiences sparked an interest in me to tutor more professionally so I can help other students feel confident in their study too.</p>
           </div>
         </div>
         <div class="about-photo-container">
@@ -701,56 +599,22 @@
         </div>
       </div>
 
-      <!-- NEW: Grades heading with the same diamond + hover behaviour (no transition logic changed) -->
       <div class="about-item grades-heading">
         <h3>Grades</h3>
       </div>
 
       <div class="grades-container">
-        <div class="grade-item">
-          <span class="grade-subject">Maths</span>
-          <span class="grade-number">9</span>
-        </div>
-        <div class="grade-item">
-          <span class="grade-subject">Biology</span>
-          <span class="grade-number">9</span>
-        </div>
-        <div class="grade-item">
-          <span class="grade-subject">Chemistry</span>
-          <span class="grade-number">9</span>
-        </div>
-        <div class="grade-item">
-          <span class="grade-subject">Physics</span>
-          <span class="grade-number">9</span>
-        </div>
-        <div class="grade-item">
-          <span class="grade-subject">Computer Science</span>
-          <span class="grade-number">9</span>
-        </div>
-        <div class="grade-item">
-          <span class="grade-subject">Information Technology</span>
-          <span class="grade-number">9</span>
-        </div>
-        <div class="grade-item">
-          <span class="grade-subject">History</span>
-          <span class="grade-number">9</span>
-        </div>
-        <div class="grade-item">
-          <span class="grade-subject">English Language</span>
-          <span class="grade-number">9</span>
-        </div>
-        <div class="grade-item">
-          <span class="grade-subject">English Literature</span>
-          <span class="grade-number">9</span>
-        </div>
-        <div class="grade-item">
-          <span class="grade-subject">Further Maths</span>
-          <span class="grade-number">8</span>
-        </div>
-        <div class="grade-item">
-          <span class="grade-subject">French</span>
-          <span class="grade-number">8</span>
-        </div>
+        <div class="grade-item"><span class="grade-subject">Maths</span><span class="grade-number">9</span></div>
+        <div class="grade-item"><span class="grade-subject">Biology</span><span class="grade-number">9</span></div>
+        <div class="grade-item"><span class="grade-subject">Chemistry</span><span class="grade-number">9</span></div>
+        <div class="grade-item"><span class="grade-subject">Physics</span><span class="grade-number">9</span></div>
+        <div class="grade-item"><span class="grade-subject">Computer Science</span><span class="grade-number">9</span></div>
+        <div class="grade-item"><span class="grade-subject">Information Technology</span><span class="grade-number">9</span></div>
+        <div class="grade-item"><span class="grade-subject">History</span><span class="grade-number">9</span></div>
+        <div class="grade-item"><span class="grade-subject">English Language</span><span class="grade-number">9</span></div>
+        <div class="grade-item"><span class="grade-subject">English Literature</span><span class="grade-number">9</span></div>
+        <div class="grade-item"><span class="grade-subject">Further Maths</span><span class="grade-number">8</span></div>
+        <div class="grade-item"><span class="grade-subject">French</span><span class="grade-number">8</span></div>
       </div>
     </div>
   </template>
