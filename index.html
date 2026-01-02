@@ -406,7 +406,12 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 0.5rem;
-      margin-top: -3rem;
+      margin-top: 0rem; /* changed from -3rem so the new Grades heading doesn't overlap */
+    }
+
+    .grades-heading {
+      margin-top: 0.25rem;
+      margin-bottom: -0.75rem; /* keeps spacing tight without affecting any animations */
     }
 
     .grade-item {
@@ -688,13 +693,19 @@
         <div class="about-text">
           <div class="about-item">
             <h3>Who I Am</h3>
-            <p>My name is Abiral Gurung, a 16 year old who has completed his GCSEs. I have always been passionate about learning and helping others at improving in their own study. During my time at secondary school I have gained experience in tutoring through numerous sessions with friends in group and one to one video calls. Those experiences sparked an interest in me to tutor more professionally so I can help other students feel confident in their study too.</p>
+            <p>My name is Abiral Gurung, a 17 year old who has completed his GCSEs and is now attending college. I have always been passionate about learning and helping others at improving in their own study. During my time at secondary school I have gained experience in tutoring through numerous sessions with friends in group and one to one video calls. Those experiences sparked an interest in me to tutor more professionally so I can help other students feel confident in their study too.</p>
           </div>
         </div>
         <div class="about-photo-container">
           <img src="portrait.png" alt="Portrait" class="about-photo">
         </div>
       </div>
+
+      <!-- NEW: Grades heading with the same diamond + hover behaviour (no transition logic changed) -->
+      <div class="about-item grades-heading">
+        <h3>Grades</h3>
+      </div>
+
       <div class="grades-container">
         <div class="grade-item">
           <span class="grade-subject">Maths</span>
