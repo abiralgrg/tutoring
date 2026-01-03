@@ -102,9 +102,7 @@
     }
 
     .next-button.active { opacity: 1; transform: translateY(0); }
-
     .next-button:hover { background: var(--navy); color: var(--offwhite); }
-
     .next-button:hover .diamond { background: var(--offwhite); border-color: var(--offwhite); }
 
     .diamond {
@@ -125,8 +123,8 @@
       display: flex;
       flex-direction: column;
 
-      /* COMPACT GRADES SPACING: give content a little safe room above the nav */
-      padding-bottom: 1.5rem;
+      /* MORE ROOM ABOVE NAV: prevents collision on short screens */
+      padding-bottom: 3.25rem;
     }
 
     .content-section {
@@ -190,7 +188,6 @@
     }
 
     .nav-item.active { background: var(--navy); color: white; }
-
     .nav-item.disabled { pointer-events: none; opacity: 0.5; }
 
     .nav-symbol {
@@ -329,8 +326,8 @@
       display: flex;
       flex-direction: column;
 
-      /* COMPACT GRADES SPACING: reduce global vertical spacing in About */
-      gap: 0.75rem;
+      /* MORE COMPACT */
+      gap: 0.5rem;
     }
 
     .about-content {
@@ -338,8 +335,8 @@
       gap: 2rem;
       align-items: flex-start;
 
-      /* COMPACT GRADES SPACING: reduce bottom space under the top block */
-      margin-bottom: 0.25rem;
+      /* MORE COMPACT */
+      margin-bottom: 0rem;
     }
 
     .about-text { flex: 1; }
@@ -369,24 +366,29 @@
     }
 
     .grades-heading {
-      /* COMPACT GRADES SPACING: pull heading closer to the top content */
-      margin-top: 0.1rem;
-      margin-bottom: 0.1rem;
+      /* MORE COMPACT */
+      margin-top: 0;
+      margin-bottom: 0;
     }
 
     .grades-container {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
 
-      /* COMPACT GRADES SPACING: remove extra top offset entirely */
+      /* FEWER ROWS ON DESKTOP: makes the whole block "higher up" */
+      grid-template-columns: repeat(4, 1fr);
+
+      /* TIGHTER */
+      gap: 0.4rem;
       margin-top: 0;
     }
 
     .grade-item {
       display: flex;
       align-items: center;
-      padding: 0.4rem;
+
+      /* SHORTER CARDS */
+      padding: 0.25rem;
+
       border: var(--line-thickness) solid var(--navy);
       background: transparent;
       opacity: 0;
@@ -415,13 +417,19 @@
     .grade-subject {
       flex: 1;
       font-weight: 500;
-      font-size: 0.9rem;
+
+      /* SLIGHTLY SMALLER */
+      font-size: 0.85rem;
+
       transition: color 0.15s linear;
     }
 
     .grade-number {
       font-weight: 600;
-      font-size: 1rem;
+
+      /* SLIGHTLY SMALLER */
+      font-size: 0.9rem;
+
       color: var(--navy);
       transition: color 0.15s linear;
     }
@@ -456,7 +464,6 @@
     .content-section.active .subject-item:nth-child(6) { transition-delay: 0.35s; }
 
     .approach-section { display: flex; flex-direction: column; gap: 2rem; }
-
     .pricing-section { display: flex; flex-direction: column; gap: 2rem; }
 
     .pricing-description {
@@ -497,7 +504,8 @@
 
       .subject-list { grid-template-columns: 1fr; }
 
-      .grades-container { grid-template-columns: 1fr 1fr; margin-top: 0rem; }
+      /* Keep 2 columns on tablet for readability */
+      .grades-container { grid-template-columns: 1fr 1fr; }
 
       .about-content { flex-direction: column; }
 
@@ -591,7 +599,7 @@
         <div class="about-text">
           <div class="about-item">
             <h3>Who I Am</h3>
-            <p>My name is Abiral Gurung, a 16 year old who has completed his GCSEs. I have always been passionate about learning and helping others at improving in their own study. During my time at secondary school I have gained experience in tutoring through numerous sessions with friends in group and one to one video calls. Those experiences sparked an interest in me to tutor more professionally so I can help other students feel confident in their study too.</p>
+            <p>My name is Abiral Gurung, a 17 year old who has completed his GCSEs and is currently attending college. I have always been passionate about learning and helping others at improving in their own study. During my time at secondary school I have gained experience in tutoring through numerous sessions with friends in group and one to one video calls. Those experiences sparked an interest in me to tutor more professionally so I can help other students feel confident in their study too.</p>
           </div>
         </div>
         <div class="about-photo-container">
