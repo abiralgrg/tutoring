@@ -122,8 +122,6 @@
       position: relative;
       display: flex;
       flex-direction: column;
-
-      /* MORE ROOM ABOVE NAV: prevents collision on short screens */
       padding-bottom: 3.25rem;
     }
 
@@ -325,8 +323,6 @@
     .about-section {
       display: flex;
       flex-direction: column;
-
-      /* MORE COMPACT */
       gap: 0.5rem;
     }
 
@@ -334,8 +330,6 @@
       display: flex;
       gap: 2rem;
       align-items: flex-start;
-
-      /* MORE COMPACT */
       margin-bottom: 0rem;
     }
 
@@ -366,18 +360,13 @@
     }
 
     .grades-heading {
-      /* MORE COMPACT */
       margin-top: 0;
       margin-bottom: 0;
     }
 
     .grades-container {
       display: grid;
-
-      /* FEWER ROWS ON DESKTOP: makes the whole block "higher up" */
       grid-template-columns: repeat(4, 1fr);
-
-      /* TIGHTER */
       gap: 0.4rem;
       margin-top: 0;
     }
@@ -385,10 +374,7 @@
     .grade-item {
       display: flex;
       align-items: center;
-
-      /* SHORTER CARDS */
       padding: 0.25rem;
-
       border: var(--line-thickness) solid var(--navy);
       background: transparent;
       opacity: 0;
@@ -417,19 +403,13 @@
     .grade-subject {
       flex: 1;
       font-weight: 500;
-
-      /* SLIGHTLY SMALLER */
       font-size: 0.85rem;
-
       transition: color 0.15s linear;
     }
 
     .grade-number {
       font-weight: 600;
-
-      /* SLIGHTLY SMALLER */
       font-size: 0.9rem;
-
       color: var(--navy);
       transition: color 0.15s linear;
     }
@@ -492,6 +472,33 @@
 
     .phone-number:hover { background: var(--navy); color: var(--offwhite); }
 
+    .blog-link{
+      display: inline-block;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      color: var(--navy);
+      text-decoration: none;
+      position: relative;
+      margin-top: 0.35rem;
+      padding-bottom: 0.1rem;
+    }
+
+    .blog-link::after{
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: var(--navy);
+      transition: width 0.3s ease;
+    }
+
+    .blog-link:hover::after{
+      width: 100%;
+    }
+
     @media (max-width: 768px) {
       .header { margin-bottom: 1rem; }
       .nav-container { display: none; }
@@ -503,10 +510,7 @@
       .cursor { height: 3.5rem; }
 
       .subject-list { grid-template-columns: 1fr; }
-
-      /* Keep 2 columns on tablet for readability */
       .grades-container { grid-template-columns: 1fr 1fr; }
-
       .about-content { flex-direction: column; }
 
       .about-item,
@@ -535,9 +539,7 @@
       .title-text { font-size: 2.8rem; }
       .title-wrapper { min-height: 2.8rem; }
       .cursor { height: 2.8rem; }
-
       .grades-container { grid-template-columns: 1fr; }
-
       :root { --nav-spacing: 1.5rem; }
     }
   </style>
@@ -693,6 +695,12 @@
         <p>I am free anytime to discuss tuition. Please message me using this number and I will respond in under 24 hours.</p>
         <a href="tel:+44 7826 211058" class="phone-number">+44 7826 211058</a>
       </div>
+
+      <div class="contact-item">
+        <h3>Blog</h3>
+        <p>Thank you for considering my tuition service. If you’d like to see what I’ve been working on recently, you can find updates on my blog.</p>
+        <a href="/blog" class="blog-link">Visit the Blog</a>
+      </div>
     </div>
   </template>
 
@@ -709,7 +717,6 @@
       const navGrid = document.querySelector('.nav-grid');
       const nextButton = document.querySelector('.next-button');
       const navContainer = document.querySelector('.nav-container');
-      const contentArea = document.querySelector('.content-area');
       let isAnimating = false;
       let currentSection = 'about';
       let isMobileLayout = window.innerHeight <= 910 || window.innerWidth <= 768;
